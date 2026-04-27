@@ -62,22 +62,10 @@ Configure Github Actions needed Secrets at:
 
 | Key | Example value | Description |
 |-----|---------------|-------------|
-| `AWS_BUCKET_NAME` | `aws-bucket` | AWS S3 bucket name |
+| `AWS_BUCKET_NAME` | `my-aws-bucket` | AWS S3 bucket name |
 | `AWS_REGION` | `us-west-2` | AWS region |
-| `AWS_ACCESS_KEY_ID` | `AKIAIOSFODNN7EXAMPLE` | AWS access key ID  |
-| `AWS_SECRET_ACCESS_KEY` | `wJalrXUtnFEMI/K7MDENG/...` | AWS secret access key  |
-
-## 7. Pipeline Flow
-1. Validate CI/CD inputs, configuration, and prerequisites
-2. Run readiness check to check active merge requests and running pipelines
-3. Pause for manual approval (review readiness output before proceeding)
-4. Generate GitLab repository migration archives
-5. Upload migration archives to intermediate storage
-6. Initiate GitHub repository migrations using uploaded archives
-7. Display final migration summary (successes, failures, and migration IDs)
-8. Preserve logs, reports, and outputs as pipeline artifacts
-
-
+| `AWS_ACCESS_KEY_ID` | `ABCDEFNN7EXAMPLE` | AWS access key ID  |
+| `AWS_SECRET_ACCESS_KEY` | `ZYHXWVUtnFEXAMPLE/...` | AWS secret access key  |
 
 ### 1.5 Install GH CLI
 - Install GitHub CLI by following the link below
