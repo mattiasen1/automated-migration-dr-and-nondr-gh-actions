@@ -43,6 +43,73 @@ gh extension install https://github.com/mona-actions/gh-migration-monitor
 ```
 gh extension install https://github.com/github/gh-ado2gh
 ```
+## 2. Repository Contents
+    .
+    ├── .github/workflows
+    |      |-- gl-to-gh-migration.yaml
+    ├── README.md
+    ├── config.sh
+    ├── runner.sh
+    ├── gl-migration-readiness-check.sh
+    ├── generate-gl-migration-archive.sh
+    ├── upload-gl-migration-archive.sh
+    ├── start-gl2gh-repo-migration.sh
+    ├── gl-post-migration-validation.sh
+    ├── gitlab-stats-sample.csv
+    └── migration_scripts/
+        ├── batch.js
+        ├── create-env-vars.js
+        ├── create-migration-source.js
+        ├── gh-api.js
+        ├── index.js
+        ├── issue.js
+        ├── migration.js
+        ├── package.json
+        ├── repository.js
+        ├── start-repo-migration.js
+        ├── state.js
+        ├── team.js
+        ├── upload-to-github-blob.sh
+        ├── upload-to-azure-blob.sh
+        ├── upload-to-aws-blob.sh
+        ├── user.js
+        └── workflow.js
+
+## 3. Scripts and Purpose
+
+### 3.1 Shell scripts
+| Script | Purpose |
+|------|---------|
+| `config.sh` | Contains shared / generic variables used by multiple scripts. |
+| `runner.sh` | Runner helper / wrapper script (used to execute the workflow in the runner environment). |
+| `gl-migration-readiness-check.sh` | Check for active merge requests and running pipelines. |
+| `generate-gl-migration-archive.sh` | Generates GitLab migration archives (exports) for repositories defined in the inventory. |
+| `upload-gl-migration-archive.sh` | Uploads the generated archives to GitHub storage (used later by migration jobs). |
+| `start-gl2gh-repo-migration.sh` | Triggers repository migrations in GitHub. |
+| `gl-post-migration-validation.sh` | Compares branch and commit counts between GitLab and GitHub to validate migration. This script is not part of the CI/CD pipeline and must be run manually after migration completes. |
+
+### 3.2 Scripts in `migration_scripts/` directory
+This directory contains JavaScript modules used to orchestrate GitHub migration operations.
+
+| List of JS scripts |
+|------|
+| `batch.js` |
+| `create-env-vars.js` |
+| `create-migration-source.js` |
+| `gh-api.js` |
+| `index.js` |
+| `issue.js` |
+| `migration.js` |
+| `repository.js` |
+| `start-repo-migration.js` |
+| `state.js` |
+| `team.js` |
+| `user.js` |
+| `workflow.js` |
+| `upload-to-github-blob.sh` |
+| `upload-to-azure-blob.sh` |
+| `upload-to-aws-blob.sh` |
+ 
 
  
 
