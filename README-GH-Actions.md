@@ -89,7 +89,7 @@ gh extension install https://github.com/github/gh-ado2gh
 ## 2. Repository Contents
     .
     ├── .github/workflows
-    |      |-- gl-to-gh-migration.yaml
+    |    ├── gl-to-gh-migration.yaml
     ├── README.md
     ├── config.sh
     ├── runner.sh
