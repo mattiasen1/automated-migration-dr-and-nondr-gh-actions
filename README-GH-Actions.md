@@ -17,7 +17,7 @@
 - **Object Storge Feature Flag:** GitHub Object Storage feature flag should be enabled for the target GitHub Org and GH Handle.
 - **GitHub Personal Access Token (PAT):** - Create a GitHub PAT toke with the scopes **repo, admin:org, workflow, user**
 - **Adding GitHub Runner:** GitHub Runner should be added to execute migration.
--  **To add new runner:**  Repo Settings --> Code and automation(section) --> Actions --> Runners --> new self-hosted runner --> Runner image (Linux) --> Execute the commands to configure
+-  **To add new runner:**  *Repo Settings → Code and automation(section)  → Actions  → Runners  → new self-hosted runner --> Runner image (Linux)  → Execute the commands to configure*
 
 ### 1.3 Intermediate Storage for Archive Files
 - GitHub Storage (up to 30 GB)
@@ -26,7 +26,7 @@
 
 ### 1.4 Actions Secrets Setup (GitHub)
 Configure Github Actions needed Secrets at:
-**GitHub Repo → Settings → Security and quality(section) → Secrets and Variables → Actions →New repository secret**
+*GitHub Repo → Settings → Security and quality(section) → Secrets and Variables → Actions →New repository secret*
 
 ### For GitHub Enterprise Cloud
 
