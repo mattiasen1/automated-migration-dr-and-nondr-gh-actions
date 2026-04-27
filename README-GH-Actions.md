@@ -44,11 +44,7 @@ gh extension install https://github.com/mona-actions/gh-migration-monitor
 gh extension install https://github.com/github/gh-ado2gh
 ```
 
-### 2.8 Network configuration
-- The customer is required to configure the allow IP lists according to their implementation. The following documentation will assist with configuration if it has not yet been completed.
-```
-https://docs.github.com/en/enterprise-cloud@latest/migrations/ado/managing-access-for-a-migration-from-azure-devops#configuring-ip-allow-lists-for-migrations
-```
+ 
 
 
 
