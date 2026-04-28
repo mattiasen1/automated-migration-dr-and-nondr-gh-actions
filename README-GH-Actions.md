@@ -182,7 +182,7 @@ Fill in the target GitHub organization and repository name for each row.
 - This file name will be passed as the `INVENTORY_FILE` user input when running the pipeline.
 
 
-
+ ## 5. Running the GitHub Actions Workflow
 
 
 
