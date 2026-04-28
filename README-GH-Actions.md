@@ -189,8 +189,18 @@ Fill in the target GitHub organization and repository name for each row.
 - Upload the CSV to the GitLab project.
 - This file name will be passed as the `INVENTORY_FILE` user input when running the pipeline.
 
+## 5. Runner Tag Configuration
+This workflow is designed to run on a dedicated self-hosted Linux runner that has the required migration tooling and network access to GitLab/GitHub endpoints.
+- This workflow uses the GitHub Runner tag **GLMigration** to select the appropriate runner for execution.
+- The runner tag must be updated to match the GitHub Runner configured in your environment.
 
- ## 5. ▶️ Running the GitHub Actions Workflow
+### 5.1 Workflow configuration (YAML)
+
+`runs-on: [self-hosted, GLMigration]`
+
+- Ensure the runner tag is applied to all workflow jobs.
+
+ ## 6. ▶️ Running the GitHub Actions Workflow
 
 The GitLab to GitHub Migration Pipeline workflow is designed to be triggered manually and requires user inputs at runtime. Follow the steps below to execute the workflow.
 
