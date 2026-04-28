@@ -52,7 +52,7 @@ jobs:
   # ------------------ 1) Validate Prerequisites ------------------
   validate-prerequisites:
     name: validate-prerequisites
-    runs-on: [self-hosted, gl-mig-runner]
+    runs-on: [self-hosted, GLMigration]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -190,7 +190,7 @@ jobs:
   # ------------------ 2) Pre-Migration Readiness Check ------------------
   pre-migration-readiness-check:
     name: pre-migration-readiness-check
-    runs-on: [self-hosted, gl-mig-runner]
+    runs-on: [self-hosted, GLMigration]
     needs: [validate-prerequisites]
     steps:
       - name: Checkout
@@ -242,7 +242,7 @@ jobs:
   # ------------------ Approve after Readiness Check ------------------
   approve-after-readiness-check:
     name: approve-after-readiness-check
-    runs-on: [self-hosted, gl-mig-runner]
+    runs-on: [self-hosted, GLMigration]
     needs: [pre-migration-readiness-check]
     environment:
       name: approve-after-readiness-check
@@ -269,7 +269,7 @@ jobs:
   # ------------------ 3) Generate Migration Archives ------------------
   generate-migration-archives:
     name: generate-migration-archives
-    runs-on: [self-hosted, gl-mig-runner]
+    runs-on: [self-hosted, GLMigration]
     needs: [approve-after-readiness-check]
     outputs:
       ARCHIVE_LIST_BASENAME: ${{ steps.capture.outputs.ARCHIVE_LIST_BASENAME }}
@@ -346,7 +346,7 @@ jobs:
   # ------------------ 4) Upload Migration Archives ------------------
   upload-migration-archives:
     name: upload-migration-archives
-    runs-on: [self-hosted, gl-mig-runner]
+    runs-on: [self-hosted, GLMigration]
     needs: [generate-migration-archives]
     outputs:
       UPLOADED_ARCHIVES_BASENAME: ${{ steps.capture.outputs.UPLOADED_ARCHIVES_BASENAME }}
@@ -447,7 +447,7 @@ jobs:
   # ------------------ 5) Start Repository Migration ------------------
   start-repository-migration:
     name: start-repository-migration
-    runs-on: [self-hosted, gl-mig-runner]
+    runs-on: [self-hosted, GLMigration]
     needs: [upload-migration-archives]
     steps:
       - name: Checkout
@@ -526,7 +526,7 @@ jobs:
   # ------------------ 6) Display Final Summary ------------------
   display-final-summary:
     name: display-final-summary
-    runs-on: [self-hosted, gl-mig-runner]
+    runs-on: [self-hosted, GLMigration]
     needs: [pre-migration-readiness-check, generate-migration-archives, upload-migration-archives, start-repository-migration]
     steps:
       - name: Checkout
