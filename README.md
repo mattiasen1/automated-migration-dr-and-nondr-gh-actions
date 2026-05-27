@@ -192,42 +192,50 @@ Configure CI/CD variables in:
 **GitHub Repository → Settings → Secrets and Variables → Actions → New Repository Secret**
 
 ### For GitHub Enterprise Cloud
-| Key | Example value | Description |
-|--------|-------------|--------|-------------|
-| `SOURCE_GL_SERVER_URL` | `https://gitlab.company.com` | GitLab Server URL |
-| `GITLAB_USERNAME` | `gitlab-user` | GitLab username |
-| `GITLAB_API_PRIVATE_TOKEN` | `glpat-xxxxxxx` | GitLab API private token |
-| `GH_PAT` | `ghp_xxxxx` | GitHub Personal Access Token |
-| `GH_ORG` | `myghorg` | GitHub Organization name |
+ 
+| Key                      | Example Value              | Description                  |
+|--------------------------|----------------------------|------------------------------|
+| SOURCE_GL_SERVER_URL     | https://gitlab.company.com | GitLab Server URL            |
+| GITLAB_USERNAME          | gitlab-user                | GitLab username              |
+| GITLAB_API_PRIVATE_TOKEN | glpat-xxxxxxx              | GitLab API private token     |
+| GH_PAT                   | ghp_xxxxx                  | GitHub Personal Access Token |
+| GH_ORG                   | myghorg                    | GitHub organization name     |
 
 
 ### For GitHub Enterprise Cloud with Data Residency
-| Key | Example value | Description | Visibility |
-|--------|-------------|--------|-------------|
-| `SOURCE_GL_SERVER_URL` | `https://gitlab.company.com` | GitLab Server URL |
-| `GITLAB_USERNAME` | `gitlab-user` | GitLab username |
-| `GITLAB_API_PRIVATE_TOKEN` | `glpat-xxxxxxx` | GitLab API private token |
-| `GH_PAT` | `ghp_xxxxx` | GitHub Personal Access Token |
-| `GH_ORG` | `myghorg` | GitHub Organization name |
-| `GH_SERVER_URL` | `https://SUBDOMAIN.ghe.com` | GitHub URL |
-| `GH_API_URL` | `https://api.SUBDOMAIN.ghe.com` | GitHub API URL |
-| `STORAGE_TYPE` | `AZURE (or) AWS` | Intermediate storage type |
+
+| Key                      | Example Value              | Description                  |
+|--------------------------|----------------------------|------------------------------|
+| `SOURCE_GL_SERVER_URL`   | `https://gitlab.company.com` | GitLab Server URL          |
+| `GITLAB_USERNAME`        | `gitlab-user`              | GitLab username              |
+| `GITLAB_API_PRIVATE_TOKEN` | `glpat-xxxxxxx`          | GitLab API private token     |
+| `GH_PAT`                 | `ghp_xxxxx`               | GitHub Personal Access Token |
+| `GH_ORG`                 | `myghorg`                 | GitHub organization name     |
+| `GH_SERVER_URL`          | `https://SUBDOMAIN.ghe.com` | GitHub Server URL          |
+| `GH_API_URL`             | `https://api.SUBDOMAIN.ghe.com` | GitHub API URL        |
+| `STORAGE_TYPE`           | `AZURE or AWS`            | Intermediate storage type    |
+
 
 - If storage type is Azure, export the following env
 
-| Key | Example value | Description | Visibility |
-|--------|-------------|--------|-------------|
-| `AZ_CONTAINER` | `container-name` | Azure container name |
-| `AZURE_STORAGE_CONNECTION_STRING` | `connection-string` | Connection String |
+## Azure Storage Configuration
+
+| Key                                | Example Value      | Description                         |
+|------------------------------------|--------------------|-------------------------------------|
+| `AZ_CONTAINER`                     | `container-name`   | Azure container name                |
+| `AZURE_STORAGE_CONNECTION_STRING`  | `connection-string`| Azure storage connection string     |
+
 
 - If storage type is AWS, export the following env
 
-| Key | Example value | Description | Visibility |
-|--------|-------------|--------|-------------|
-| `AWS_BUCKET_NAME` | `aws-bucket` | AWS Bucket name  |
-| `AWS_REGION` | `us-west` | AWS region |
-| `AWS_SECRET_ACCESS_KEY` | `aws-key` | AWS secret access key |
-| `AWS_ACCESS_KEY_ID` | `access-id` | AWS access key ID |
+## AWS Storage Configuration
+
+| Key                       | Example Value  | Description                  |
+|---------------------------|----------------|------------------------------|
+| `AWS_BUCKET_NAME`         | `aws-bucket`   | AWS bucket name              |
+| `AWS_REGION`              | `us-west`      | AWS region                   |
+| `AWS_SECRET_ACCESS_KEY`   | `aws-key`      | AWS secret access key        |
+| `AWS_ACCESS_KEY_ID`       | `access-id`    | AWS access key ID            |
 
 ## 6.1 Setup environment for readiness approval process
 Configure Environment in:
