@@ -33,7 +33,7 @@ else
   echo "[INFO] Using Inventory file: $INVENTORY_FILE"
 fi
 
-if ! sudo docker image inspect "$GL_EXPORTER_IMAGE" >/dev/null 2>&1; then
+if ! podman image inspect "$GL_EXPORTER_IMAGE" >/dev/null 2>&1; then
   echo "[ERROR] $GL_EXPORTER_IMAGE not found"
   exit 1
 fi
@@ -143,7 +143,7 @@ while IFS= read -r raw; do
       echo "[INFO] SSL verification disabled for gl-exporter"
     fi
 
-  if sudo docker run --rm \
+  if podman run --rm \
       -e GITLAB_API_ENDPOINT="$GITLAB_API_ENDPOINT" \
       -e GITLAB_USERNAME="$GITLAB_USERNAME" \
       -e GITLAB_API_PRIVATE_TOKEN="$GITLAB_API_PRIVATE_TOKEN" \
