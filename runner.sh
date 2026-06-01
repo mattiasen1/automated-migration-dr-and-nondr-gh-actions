@@ -10,6 +10,18 @@ SCRIPT_PATH="$1"
 
 RESULT=$(
   node - "$SCRIPT_PATH" <<'NODE'
+// Auto-configure proxy from standard environment variables so Node.js/undici
+// honours the same proxy that curl uses on this runner
+try {
+  const { setGlobalDispatcher, ProxyAgent } = require('undici');
+  const proxyUrl = process.env.HTTPS_PROXY || process.env.https_proxy ||
+                   process.env.HTTP_PROXY  || process.env.http_proxy;
+  if (proxyUrl) {
+    setGlobalDispatcher(new ProxyAgent(proxyUrl));
+    console.error('[INFO] Proxy configured:', proxyUrl);
+  }
+} catch (_) { /* undici unavailable, continuing without proxy */ }
+
 import('@octokit/rest').then(({ Octokit }) => {
   import('@octokit/graphql').then(({ graphql }) => {
     const scriptPath = process.argv[2];
