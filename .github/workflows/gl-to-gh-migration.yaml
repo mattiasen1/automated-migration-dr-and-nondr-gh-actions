@@ -35,11 +35,11 @@ env:
   CI_PROJECT_DIR: ${{ github.workspace }}
 
   # Expected to be configured as GitHub Secrets/Variables in the repo/environment
-  SOURCE_GL_SERVER_URL: ${{ secrets.SOURCE_GL_SERVER_URL }}
+  SOURCE_GL_SERVER_URL: ${{ vars.SOURCE_GL_SERVER_URL }}
   GITLAB_API_PRIVATE_TOKEN: ${{ secrets.GITLAB_API_PRIVATE_TOKEN }}
-  GITLAB_USERNAME: ${{ secrets.GITLAB_USERNAME }}
-  GH_SERVER_URL: ${{ secrets.GH_SERVER_URL }}
-  GH_API_URL: ${{ secrets.GH_API_URL }}
+  GITLAB_USERNAME: ${{ vars.GITLAB_USERNAME }}
+  GH_SERVER_URL: ${{ vars.GH_SERVER_URL }}
+  GH_API_URL: ${{ vars.GH_API_URL }}
   STORAGE_TYPE: ${{ secrets.STORAGE_TYPE }}
   AZ_CONTAINER: ${{ secrets.AZ_CONTAINER }}
   AZURE_STORAGE_CONNECTION_STRING: ${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}
@@ -52,7 +52,7 @@ jobs:
   # ------------------ 1) Validate Prerequisites ------------------
   validate-prerequisites:
     name: validate-prerequisites
-    runs-on: [self-hosted, GLMigration]
+    runs-on: [migration-runner]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -190,7 +190,7 @@ jobs:
   # ------------------ 2) Pre-Migration Readiness Check ------------------
   pre-migration-readiness-check:
     name: pre-migration-readiness-check
-    runs-on: [self-hosted, GLMigration]
+    runs-on: [migration-runner]
     needs: [validate-prerequisites]
     steps:
       - name: Checkout
@@ -242,7 +242,7 @@ jobs:
   # ------------------ Approve after Readiness Check ------------------
   approve-after-readiness-check:
     name: approve-after-readiness-check
-    runs-on: [self-hosted, GLMigration]
+    runs-on: [migration-runner]
     needs: [pre-migration-readiness-check]
     environment:
       name: approve-after-readiness-check
@@ -269,8 +269,11 @@ jobs:
   # ------------------ 3) Generate Migration Archives ------------------
   generate-migration-archives:
     name: generate-migration-archives
-    runs-on: [self-hosted, GLMigration]
+    runs-on: [migration-runner]
     needs: [approve-after-readiness-check]
+    permissions:
+      packages: read
+      contents: read
     outputs:
       ARCHIVE_LIST_BASENAME: ${{ steps.capture.outputs.ARCHIVE_LIST_BASENAME }}
     steps:
@@ -284,6 +287,13 @@ jobs:
           key: ${{ runner.os }}-node_modules-${{ hashFiles('package-lock.json', 'package.json') }}
           restore-keys: |
             ${{ runner.os }}-node_modules-
+
+      - name: Log in to GHCR and pull gl-exporter image 
+      # Note: Pull the required image, change podman pull to pull your desired image. Pulled it from GHCR. 
+      # This step should only be necessary if running on ephemeral runners, if non ephemeral image could exixt locally on the machine  
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | podman login ghcr.io -u x-access-token --password-stdin
+          podman pull gl-exporter:latest
 
       - name: generate-migration-archives
         shell: bash
@@ -346,7 +356,7 @@ jobs:
   # ------------------ 4) Upload Migration Archives ------------------
   upload-migration-archives:
     name: upload-migration-archives
-    runs-on: [self-hosted, GLMigration]
+    runs-on: [migration-runner]
     needs: [generate-migration-archives]
     outputs:
       UPLOADED_ARCHIVES_BASENAME: ${{ steps.capture.outputs.UPLOADED_ARCHIVES_BASENAME }}
@@ -397,7 +407,7 @@ jobs:
           export AWS_ACCESS_KEY_ID="${AWS_ACCESS_KEY_ID:-}"
           export AWS_SECRET_ACCESS_KEY="${AWS_SECRET_ACCESS_KEY:-}"
 
-          chmod +x ./upload-gl-migration-archive.sh ./config.sh
+          chmod +x ./upload-gl-migration-archive.sh ./config.sh ./migration_scripts/upload-to-github-blob.sh
           [[ -x "./upload-gl-migration-archive.sh" ]] || { echo "[ERROR] upload-gl-migration-archive.sh not executable"; exit 1; }
 
           ARCHIVE_LIST="$(basename "$ARCHIVE_LIST")"
@@ -447,7 +457,7 @@ jobs:
   # ------------------ 5) Start Repository Migration ------------------
   start-repository-migration:
     name: start-repository-migration
-    runs-on: [self-hosted, GLMigration]
+    runs-on: [migration-runner]
     needs: [upload-migration-archives]
     steps:
       - name: Checkout
@@ -526,7 +536,7 @@ jobs:
   # ------------------ 6) Display Final Summary ------------------
   display-final-summary:
     name: display-final-summary
-    runs-on: [self-hosted, GLMigration]
+    runs-on: [migration-runner]
     needs: [pre-migration-readiness-check, generate-migration-archives, upload-migration-archives, start-repository-migration]
     steps:
       - name: Checkout
