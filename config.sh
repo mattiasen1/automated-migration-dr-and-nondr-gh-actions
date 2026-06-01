@@ -16,7 +16,7 @@ GITLAB_API_ENDPOINT="${SOURCE_GL_SERVER_URL}/api/v4"
 ############################################################
 # ENV FOR GL-EXPORTER, UPLOAD ARCHIVE, REPO MIGRATION
 ############################################################
-GL_EXPORTER_IMAGE="gl-exporter"
+GL_EXPORTER_IMAGE="gl-exporter" # This was changed to the actual image from GHCR (Could probably use already pulled image if tagged properly)
 GITHUB_UPLOAD_SCRIPT="$MIGRATION_SCRIPTS/upload-to-github-blob.sh"
 AZURE_UPLOAD_SCRIPT="$MIGRATION_SCRIPTS/upload-to-azure-blob.sh"
 AWS_UPLOAD_SCRIPT="$MIGRATION_SCRIPTS/upload-to-aws-blob.sh"
